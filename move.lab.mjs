@@ -451,15 +451,62 @@ export class MoveLab extends BaseAnimationPlugin {
      * @param {*} context 
      * 
      * 
-     * UPDATERS:            content: [
+     * UPDATERS:
+     *      Example:        content: [
      *                          {
      *                              id: 'obj0',
-     *                              ...
+     *                              left: -200,
+     *                              top: 0,
      *                              angle: 0,
      *                              updaters: {
-     *                                  type:
-     *                              }
-     *                          }
+     *                                  angle: {
+     *                                      type: Linear,
+     *                                      duration: 1000,
+     *                                      start: 0,
+     *                                      end: 630,
+     *                                  },
+     *                                  left: {
+     *                                      type: Linear,
+     *                                      duration: 1000,
+     *                                      start: -200,
+     *                                      end: 200,
+     *                                  },
+     *                                  top: {
+     *                                      type: Sequence, //to-be-implemented
+     *                                      duration: 1000,
+     *                                      items: [
+     *                                          {
+     *                                              type: Boomerang,
+     *                                              duration: 250,
+     *                                              start: 0,
+     *                                              end: 0,
+     *                                              middle: 50,
+     *                                          },
+     *                                          {
+     *      *                                       type: Boomerang,
+     *                                              duration: 250,
+     *                                              start: 0,
+     *                                              end: 0,
+     *                                              middle: -50,
+     *                                          },
+     *                                          {
+     *                                              type: Boomerang,
+     *                                              duration: 250,
+     *                                              start: 0,
+     *                                              end: 0,
+     *                                              middle: 50,
+     *                                          },
+     *                                          {
+     *      *                                       type: Boomerang,
+     *                                              duration: 250,
+     *                                              start: 0,
+     *                                              end: 0,
+     *                                              middle: -50,
+     *                                          },
+     *                                      ],
+     *                                  },
+     *                              },
+     *                          },
      *                      ]
      */
     retrieveUpdaters(context) {
