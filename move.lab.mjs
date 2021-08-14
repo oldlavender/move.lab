@@ -10,24 +10,6 @@
  * 
  */
 
-import "/lib/lab.js";
-import "/lib/lab.fallback.js";
-
-//console.log("Initializing lab.plugins.animarion.js");
-
-/*export class Draft {
-    constructor(options){
-        this.title = (options.title || "<untitled>");
-        this.options = options;
-    }
-
-    handle(context, event){
-        console.log(`Component ${ this.title } received ${ event }`);
-        console.log("context = ", context);
-        let nothing;
-    }
-}*/
-
 export var move = {
     lab: {
         plugins: {},
@@ -63,14 +45,14 @@ export class BaseAnimationPlugin {
      *                         width: new LinearAnimationUpdater(3000, 5, 12),
      *                         angle: new LinearAnimationUpdater(3000, 30, 90),
      *                        }
-     *                      } 
+     *                      } 1
      *                      // animates object1 with 3ms duration, by linearly
      *                      increasing width from 5 to 12 and changing angle 
      *                      (rotating) linearly from 30 degrees to 90 degrees
      * 
      *      BEST USAGE      Use child classes logic
      */
-    constructor(options) {
+    constructor(options={}) {
         this.updaters = options.updaters || {}; //for updaters defined in the updaters section
         this.options = options || {};
         this.duration = options.duration || 0;
@@ -91,12 +73,6 @@ export class BaseAnimationPlugin {
        this.options.defaults = context.options || {};
        this.options.defaultcontent = context.options.content || {};
        this.updaterFunction(this.canvasScreen.timer, false);
-       /*console.log(
-           "Animation prepared. context=",
-           context,
-           "\ncontent=",
-           context.options.content
-           );*/
    }
 
    onRender(context) {
@@ -125,25 +101,14 @@ export class BaseAnimationPlugin {
        let contentArray = this.canvasScreen.options.content;
        for (let i in contentArray) {
            let content = contentArray[i];
-           //console.log("updateCoordinate: content=",content);
            if (content.id == objid) {
                content[coordinate] = value;
-               /*console.log(
-                   "Updated coordinate: ",
-                   objid,
-                   "{ ..., ",
-                   coordinate,
-                   ": ",
-                   value,
-                   ", ... }"
-                   );*/
                break;
            }
        }
    }
 
    updaterFunction(timestamp, reinstall=true) {
-       //console.log("updaterFunction(timestamp=",timestamp,")");
        for (let obj in this.updaters) {
            for (let coordinate in this.updaters[obj]) {
                let curUpdater = this.updaters[obj][coordinate];
@@ -193,10 +158,6 @@ move.lab.plugins.BaseAnimationPlugin = BaseAnimationPlugin;
  */
 export class BaseAnimationUpdater {
 
-    /*
-     * @ Class LinearMovement 
-     * Description: Calculates coordinates for a linear movement
-     */
     constructor(duration, startPosition, endPosition){
         this.setParameters(duration, startPosition, endPosition);
     }
@@ -205,7 +166,6 @@ export class BaseAnimationUpdater {
         this.duration = duration;
         this.startPosition = startPosition;
         this.endPosition = endPosition;
-        //this.endTime = this.startTime + duration;
         this.started = false;
         this.ended = false;
     }
@@ -214,7 +174,6 @@ export class BaseAnimationUpdater {
         if (!this.started) {
             this.startTime = time;
             this.currentTime = time;
-            //this.endTime = this.startTime + this.duration;
             this.ended = false;
         }
         this.started = true;
@@ -256,7 +215,6 @@ export class BaseAnimationUpdater {
      * @returns the updated coordinates for the current animation time
      */
     GetCoordinates(time=this.currentTime) {
-        //console.log("Getting coordinates for time=",time);
         if (this.ended) {
             return this.endPosition;
         } 
@@ -269,20 +227,6 @@ export class BaseAnimationUpdater {
         }
 
     }
-
-    /**
-     * @abstract            Abstract method that must be implemented by inheriting classes
-     * @summary             Returns the coordinates for a determined time updating clock
-     * @param {*} time      The time of the animation
-     */
-    /*
-    GetUpdatedCoordinates(time = Date.now()) {
-        if (this == BaseMovementAnimation) {
-            throw new TypeError("Cannot call abstract method GetUpdatedCoordinates(",time,")");
-        } else if (this.GetUpdatedCoordinates == BaseMovementAnimation.GetUpdatedCoordinates) {
-            throw new TypeError("Method GetUpdatedCoordinates(time) not implemented by child class");
-        }
-    }*/
 
     /**
      * @summary         Returns the coordinates for a determined time updating the clock
@@ -315,6 +259,7 @@ move.lab.updaters.BaseAnimationUpdater = BaseAnimationUpdater;
 
 /**
  * @class LinearAnimationUpdater   Implements linear movements or linear changes in coordinates
+ * 
  */
 export class LinearAnimationUpdater extends BaseAnimationUpdater {
     constructor(duration, startPosition, endPosition) {
@@ -325,10 +270,7 @@ export class LinearAnimationUpdater extends BaseAnimationUpdater {
         const totalMovement = this.endPosition - this.startPosition;
         const animationTime = time - this.startTime;
         let p = animationTime / this.duration;
-        /*console.log(
-            "Moment coordinates: p=",p,
-            "; totalMovement"
-            );*/
+
         return (p*totalMovement)+this.startPosition;
     }
 
@@ -358,7 +300,6 @@ export class ParabolicAnimationUpdater extends BaseAnimationUpdater {
     }
 
     setSpecificParameters(middlePosition) {
-        //super.setParameters(duration, startPosition, endPosition);
         this.middlePosition = middlePosition;
     }
 
@@ -399,17 +340,6 @@ export class ParabolicAnimationUpdater extends BaseAnimationUpdater {
             c: rootEquation.c * vertexMultiplier,
         };
 
-        /*console.log(
-            "Equation calculated from: midanimation=", midanimation,
-            " relEnd=", relEnd,
-            " relStart=", relStart,
-            " startPosition=", this.startPosition,
-            " endPosition=", this.endPosition
-        );
-        console.log("rootEquation=", rootEquation);
-        console.log("vertexMultuplier=", vertexMultiplier);
-        console.log("equation=", equation);*/
-
         this.equation = equation;
     }
 
@@ -417,13 +347,6 @@ export class ParabolicAnimationUpdater extends BaseAnimationUpdater {
         const equation = this.equation;
         const relTime = time-this.startTime;
         const coord = (equation.a * (relTime**2)) + (equation.b * relTime) + equation.c;
-
-        /*console.log(
-            "ParabolicAnimationUpdater:GetMomentCoordinates(time=",
-            time,
-            ") coord=",
-            coord
-        );*/
 
         return coord;
     }
@@ -442,8 +365,8 @@ move.lab.starters.Arc = ParabolicAnimationAltCon;
 
 
 export class MoveLab extends BaseAnimationPlugin {
-    constructor() {
-        super({});
+    constructor(options={}) {
+        super(options);
     }
 
     /**
@@ -451,59 +374,18 @@ export class MoveLab extends BaseAnimationPlugin {
      * @param {*} context 
      * 
      * 
-     * UPDATERS:
-     *      Example:        content: [
+     * UPDATERS:            content: [
      *                          {
      *                              id: 'obj0',
-     *                              left: -200,
-     *                              top: 0,
-     *                              angle: 0,
+     *                              ...
+     *                              left: -300,
      *                              updaters: {
-     *                                  angle: {
-     *                                      type: Linear,
-     *                                      duration: 1000,
-     *                                      start: 0,
-     *                                      end: 630,
-     *                                  },
      *                                  left: {
+     *                                      id: 'straight-line-1500ms',
      *                                      type: Linear,
-     *                                      duration: 1000,
-     *                                      start: -200,
-     *                                      end: 200,
-     *                                  },
-     *                                  top: {
-     *                                      type: Sequence, //to-be-implemented
-     *                                      duration: 1000,
-     *                                      items: [
-     *                                          {
-     *                                              type: Boomerang,
-     *                                              duration: 250,
-     *                                              start: 0,
-     *                                              end: 0,
-     *                                              middle: 50,
-     *                                          },
-     *                                          {
-     *      *                                       type: Boomerang,
-     *                                              duration: 250,
-     *                                              start: 0,
-     *                                              end: 0,
-     *                                              middle: -50,
-     *                                          },
-     *                                          {
-     *                                              type: Boomerang,
-     *                                              duration: 250,
-     *                                              start: 0,
-     *                                              end: 0,
-     *                                              middle: 50,
-     *                                          },
-     *                                          {
-     *      *                                       type: Boomerang,
-     *                                              duration: 250,
-     *                                              start: 0,
-     *                                              end: 0,
-     *                                              middle: -50,
-     *                                          },
-     *                                      ],
+     *                                      duration: 1500,
+     *                                      start: -300,
+     *                                      end: 300,
      *                                  },
      *                              },
      *                          },
@@ -529,7 +411,7 @@ export class MoveLab extends BaseAnimationPlugin {
                 let coordUpd = contents[i].updaters[j];
                 if (coordUpd.type !== undefined) {
                   // instantiate a new coordUpd.type with coordUpd as options
-                  this.updaters[id][j] = new move.lab.starters[coordUpd.type](
+                  this.updaters[id][j] = move.lab.starters[coordUpd.type](
                                                 coordUpd);
                 }
             }
@@ -542,33 +424,4 @@ export class MoveLab extends BaseAnimationPlugin {
     }
 }
 
-/*const lab = {};
-
-export const lab.animation = {
-    Draft: Draft,
-    AnimationModifier: AnimationModifier,
-};*/
-
-/*
-export const move = {
-    lab: {
-        plugins: {
-            BaseAnimationPlugin: BaseAnimationPlugin,
-            MoveLab: MoveLab,
-        },
-        updaters: {
-            BaseAnimationUpdater: BaseAnimationUpdater,
-            LinearAnimationUpdater: LinearAnimationUpdater,
-            ParabolicAnimationUpdater: ParabolicAnimationUpdater,
-        },
-        animationtypes: { //aliases for the updater names
-            Line: LinearAnimationUpdater,
-            Continuous: LinearAnimationUpdater,
-            Linear: LinearAnimationUpdater,
-            Parabolic: ParabolicAnimationUpdater,
-            Arc: ParabolicAnimationUpdater,
-        }
-    }
-};*/
-
-//lab.plugins = plugins;
+move.lab.plugins.MoveLab = MoveLab;
