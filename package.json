@@ -1,12 +1,27 @@
 {
   "name": "move.lab",
   "version": "0.0.1",
-  "description": "Simple animation script for lab.js",
+  "description": "Simple animation plugin for lab.js",
   "main": "move.lab.mjs",
-  "dependencies": {
+  "dependencies": {},
+  "jest": {
+    "verbose": true,
+    "moduleFileExtensions": [
+      "mjs",
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "json",
+      "node"
+    ],
+    "roots": [
+      "<rootDir>/test/updaters",
+      "<rootDir>/test/plugins"
+    ]
   },
   "scripts": {
-    "test": "echo \"Error: no test specified yet\" && exit 1"
+    "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules npx jest\" jest --config=jest.config.js --verbose --watchAll"
   },
   "repository": {
     "type": "git",
@@ -27,5 +42,9 @@
   "bugs": {
     "url": "https://github.com/brunodOut/move.lab/issues"
   },
-  "homepage": "https://github.com/brunodOut/move.lab#readme"
+  "homepage": "https://github.com/brunodOut/move.lab#readme",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^27.0.6"
+  }
 }
