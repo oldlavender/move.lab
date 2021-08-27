@@ -1,0 +1,9 @@
+.vscode/
+node_modules/
+.git/
+lib/
+plugins/
+.gitignore
+.npmignore
+*.log
+*.key
