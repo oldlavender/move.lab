@@ -1,3 +1,5 @@
+import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
+
 /**
  * 
  * @class BaseAnimationPlugin
