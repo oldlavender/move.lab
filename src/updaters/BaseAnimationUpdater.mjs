@@ -111,10 +111,14 @@ export class BaseAnimationUpdater {
      * @param {*} time 
      */
     GetMomentCoordinates(time) {
-        if (this == BaseMovementAnimation) {
-            throw new TypeError("Cannot call abstract method GetUpdatedCoordinates(",time,")");
-        } else if (this.GetUpdatedCoordinates == BaseMovementAnimation.GetUpdatedCoordinates) {
-            throw new TypeError("Method GetUpdatedCoordinates(time) not implemented by child class");
+        /*console.log("constructor=",
+        this.constructor,
+        " class=",
+        BaseAnimationUpdater);*/
+        if (this.constructor == BaseAnimationUpdater) {
+            throw new TypeError(`Cannot call abstract method GetUpdatedCoordinates(${time})`);
+        } else if (this.GetMomentCoordinates == BaseAnimationUpdater.GetMomentCoordinates) {
+            throw new TypeError("Method GetMomentCoordinates(time) not implemented by child class");
         }
     }
 }
