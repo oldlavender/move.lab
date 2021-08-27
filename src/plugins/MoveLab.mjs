@@ -10,7 +10,6 @@
  * 
  */
 
-import { cloneDeep } from "lodash";
 import { BaseAnimationPlugin } from "./BaseAnimationPlugin.mjs";
 import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
 import { LinearAnimationUpdater, LinearAnimationAltCon } from "../updaters/LinearAnimationUpdater.mjs";
@@ -110,7 +109,6 @@ export class MoveLab extends BaseAnimationPlugin {
 
 _move.lab.plugins.MoveLab = MoveLab;
 
-export const move = cloneDeep(_move);
 export { 
     BaseAnimationUpdater, 
     LinearAnimationUpdater, 
@@ -118,4 +116,5 @@ export {
     LinearAnimationAltCon,
     ParabolicAnimationAltCon,
     BaseAnimationPlugin,
+    _move as move
 };
