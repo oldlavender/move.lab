@@ -10,11 +10,15 @@
  * 
  */
 
-import { BaseAnimationUpdater, BaseAnimationPlugin } from "../updaters/BaseAnimationUpdater.mjs";
+import { cloneDeep } from "lodash";
+import { BaseAnimationPlugin } from "./BaseAnimationPlugin.mjs";
+import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
 import { LinearAnimationUpdater, LinearAnimationAltCon } from "../updaters/LinearAnimationUpdater.mjs";
 import { ParabolicAnimationUpdater, ParabolicAnimationAltCon } from "../updaters/ParabolicAnimationUpdater.mjs";
 
- const move = {
+
+
+ const _move = {
     lab: {
         plugins: {
             BaseAnimationPlugin: BaseAnimationPlugin,
@@ -91,7 +95,7 @@ export class MoveLab extends BaseAnimationPlugin {
                 let coordUpd = i.updaters[j];
                 if (coordUpd.type !== undefined) {
                   // instantiate a new coordUpd.type with coordUpd as options
-                  this.updaters[id][j] = move.lab.starters[coordUpd.type](
+                  this.updaters[id][j] = _move.lab.starters[coordUpd.type](
                                                 coordUpd);
                 }
             }
@@ -104,4 +108,14 @@ export class MoveLab extends BaseAnimationPlugin {
     }
 }
 
-move.lab.plugins.MoveLab = MoveLab;
+_move.lab.plugins.MoveLab = MoveLab;
+
+export const move = cloneDeep(_move);
+export { 
+    BaseAnimationUpdater, 
+    LinearAnimationUpdater, 
+    ParabolicAnimationUpdater,
+    LinearAnimationAltCon,
+    ParabolicAnimationAltCon,
+    BaseAnimationPlugin,
+};
