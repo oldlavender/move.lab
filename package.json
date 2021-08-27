@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Simple animation plugin for lab.js",
   "private": true,
+  "type": "module",
   "dependencies": {
     "lodash": "^4.17.21"
   },
@@ -19,11 +20,12 @@
     ],
     "roots": [
       "<rootDir>/test/updaters",
-      "<rootDir>/test/plugins"
+      "<rootDir>/test/plugins",
+      "<rootDir>/test"
     ]
   },
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=\"--experimental-vm-modules npx jest\" jest --config=jest.config.js --verbose --watchAll"
+    "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest --config=jest.config.js --verbose --watchAll"
   },
   "repository": {
     "type": "git",
@@ -49,6 +51,7 @@
     "cross-env": "^7.0.3",
     "jest": "^27.0.6",
     "webpack": "^5.51.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.8.0"
   }
 }
