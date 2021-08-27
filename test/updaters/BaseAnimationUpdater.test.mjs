@@ -60,9 +60,9 @@ const testcases = [
         endPosition: -100,
         startDef: dt,
         checkpoints: [
-            dt+400,
-            dt+800,
-            dt+1200
+            dt+450,
+            dt+900,
+            dt+1350
         ],
         endpoint: 1800+dt,
     },
