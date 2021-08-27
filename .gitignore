@@ -5,3 +5,5 @@ node_modules/
 *.key
 yarn.lock
 .disabled.*
+dist/
+coverage/

@@ -2,8 +2,10 @@
   "name": "move.lab",
   "version": "0.0.1",
   "description": "Simple animation plugin for lab.js",
-  "main": "move.lab.mjs",
-  "dependencies": {},
+  "private": true,
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
   "jest": {
     "verbose": true,
     "moduleFileExtensions": [
