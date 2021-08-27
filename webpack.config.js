@@ -1,4 +1,5 @@
 import path from 'path';
+import webpack from 'webpack';
 //const path = require('path');
 
 const reservedTerms = [
@@ -16,10 +17,9 @@ const reservedTerms = [
   ];
 
 export default (env, argv) => {
+
     const mode = argv.mode;
 
-    /*console.log("argv=", argv);
-    console.log(path.resolve(path.dirname('.'), './dist'));*/
     const outFname = {
         'development': 'move.lab.dev.mjs',
         'production': 'move.lab.mjs'
@@ -49,21 +49,25 @@ export default (env, argv) => {
             path: path.resolve(path.dirname('.'), './dist'),
             module: true,
             library: {
-                //name: 'move.lab',
                 type: 'module',
+            },
+            environment: {
+                module: true,
             },
         },
         externals: {
-            lodash: {
-                /*commonjs: 'lodash',
+            /*lodash: {
+                commonjs: 'lodash',
                 commonjs2: 'lodash',
-                amd: 'lodash',*/
-                //module: 'lodash',
+                amd: 'lodash',
+                module: 'lodash',
                 root: '_',
-            },
-        }
-        /*optimization: {
-            runtimeChunk: 'single',
-        },*/
+            },*/
+        },
+        plugins: [
+            new webpack.BannerPlugin({
+                banner: info,
+            }),
+        ],
     };
 };
