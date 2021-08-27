@@ -1,4 +1,4 @@
-import { describe, expect, test } from "@jest/globals";
+import { describe, expect, test, it } from "@jest/globals";
 import { BaseAnimationUpdater } from "../../src/updaters/BaseAnimationUpdater.mjs";
 
 var dt = Date.now();
