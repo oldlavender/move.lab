@@ -1,10 +1,13 @@
 import { describe, expect, test, it } from "@jest/globals";
-import { LinearAnimationAltCon } from "../../src/updaters/LinearAnimationUpdater.mjs";
-import { LinearAnimationUpdater } from "../../src/updaters/LinearAnimationUpdater.mjs";
+import { 
+    LinearAnimationUpdater, LinearAnimationAltCon
+ } from "../../src/updaters/LinearAnimationUpdater.mjs";
 
 var dt = Date.now();
 const TestClass = LinearAnimationUpdater;
-const Construct = cas_ => new TestClass(cas_.duration, cas_.startPosition, cas_.endPosition);
+const Construct = cas_ => new TestClass(
+    cas_.duration, cas_.startPosition, cas_.endPosition
+);
 
 const testcases = [
     {
@@ -106,7 +109,9 @@ describe(
             }
         );
         test(
-            "Start() must properly set started/ended bools and timers only when not already started",
+            "Start() must properly set".concat(
+                "started/ended bools and timers only when not already started"
+            ) ,
             ()=>{
                 for (let curCase of testcases) {
                     var curobj = Construct(curCase);
@@ -115,9 +120,12 @@ describe(
                     expect(curobj.startTime).toBe(curCase.startDef);
                     expect(curobj.currentTime).toBe(curCase.startDef);
                     expect(curobj.ended).toBe(false);
-                    curobj.Start(); // must have no effect as it's already started
-                    expect(curobj.startTime).toBe(curCase.startDef); //must be unaltered
-                    expect(curobj.currentTime).toBe(curCase.startDef); //must be unaltered
+                    // must have no effect as it's already started:
+                    curobj.Start(); 
+                    //must be unaltered:
+                    expect(curobj.startTime).toBe(curCase.startDef); 
+                    //must be unaltered:
+                    expect(curobj.currentTime).toBe(curCase.startDef); 
                 }
             }
         );
@@ -147,7 +155,9 @@ describe(
             }
         );
         test(
-            "Update() must increase currentTime when new time is greater than old one",
+            "Update() must".concat(
+                " increase currentTime when new time is greater than old one"
+            ) ,
             ()=>{
                 for (let curCase of testcases) {
                     var curobj = Construct(curCase);
@@ -156,10 +166,13 @@ describe(
                     expect(curobj.currentTime).toBe(curCase.checkpoints[0]); 
                     curobj.Update(curCase.checkpoints[1]);
                     expect(curobj.currentTime).toBe(curCase.checkpoints[1]);
-                    curobj.Update(curCase.checkpoints[0]); //try to go back in time
-                    expect(curobj.currentTime).toBe(curCase.checkpoints[1]); //shouldn't be allowed, so the current time must remain
-                    curobj.Update(curCase.checkpoints[2]); //advances again
-                    expect(curobj.currentTime).toBe(curCase.checkpoints[2]); //check if advanced again
+                    //try to go back in time:
+                    curobj.Update(curCase.checkpoints[0]); 
+                    //shouldn't be allowed, so the current time must remain:
+                    expect(curobj.currentTime).toBe(curCase.checkpoints[1]); 
+                    curobj.Update(curCase.checkpoints[2]); // <-advances again
+                    //check if advanced again:
+                    expect(curobj.currentTime).toBe(curCase.checkpoints[2]); 
                 }
             }
         );
@@ -185,9 +198,11 @@ describe(
             ()=>{
                 for (let curCase of testcases) {
                     var curobj = Construct(curCase);
-                    //console.log("curobj=", curobj);
-                    curobj.Start(curCase.startDef); // start so all functions will get coordinate
-                    expect(curobj.GetMomentCoordinates(curCase.startDef)).toBe(curCase.startPosition);
+                    // start so other functions are viable
+                    curobj.Start(curCase.startDef); 
+                    expect(
+                        curobj.GetMomentCoordinates(curCase.startDef)
+                    ).toBe(curCase.startPosition);
                     curobj.Update(curCase.checkpoints[0]);
                     expect(curobj.GetMomentCoordinates(
                         curCase.checkpoints[0]
