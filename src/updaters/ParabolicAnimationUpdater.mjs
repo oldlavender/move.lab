@@ -50,6 +50,7 @@ export class ParabolicAnimationUpdater extends BaseAnimationUpdater {
             rootEquation.bx +
             rootEquation.c
         );
+        // TODO: Implement endPosition insertion into the calculation
         const equation = {
             a: rootEquation.a * vertexMultiplier,
             b: rootEquation.b * vertexMultiplier,
@@ -62,6 +63,8 @@ export class ParabolicAnimationUpdater extends BaseAnimationUpdater {
     GetMomentCoordinates(time=this.currentTime) {
         const equation = this.equation;
         const relTime = time-this.startTime;
+        if (relTime == 0) return this.startPosition;
+        if (relTime == this.duration) return this.endPosition;
         const coord = (equation.a * (relTime**2)) + (equation.b * relTime) + equation.c;
 
         return coord;
