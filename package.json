@@ -5,6 +5,11 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.15.0",
+    "babel-jest": "^27.1.0",
+    "jsdom": "^17.0.0",
+    "lab.js": "^20.2.3",
     "lodash": "^4.17.21"
   },
   "jest": {
@@ -25,7 +30,7 @@
     ]
   },
   "scripts": {
-    "test": "cross-env NODE_OPTIONS='--experimental-vm-modules' jest --config=jest.config.js --verbose --watchAll"
+    "test": "jest --config=jest.config.cjs --verbose --watchAll"
   },
   "repository": {
     "type": "git",
