@@ -2,7 +2,7 @@
   "name": "move.lab",
   "version": "0.0.1",
   "description": "Simple animation plugin for lab.js",
-  "private": true,
+  "private": false,
   "type": "module",
   "dependencies": {
     "@babel/core": "^7.15.0",
