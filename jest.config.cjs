@@ -11,4 +11,5 @@ module.exports = {
     "<rootDir>/test/plugins",
     "<rootDir>/test",
   ],
+  testEnvironment: 'jsdom',
 };
