@@ -55,6 +55,7 @@ export class BaseAnimationUpdater {
         }
         if (this.currentTime >= (this.startTime + this.duration)) {
             this.ended = true;
+            this.currentTime = this.startTime + this.duration;
         }
     }
 
