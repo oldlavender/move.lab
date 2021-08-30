@@ -60,7 +60,6 @@ var screens = [
         plugins: [
             new BaseAnimationPlugin({
                 title: 'test@canvas:1',
-                duration: 1000,
                 updaters: {
                     object1: {
                         left: new LinearAnimationUpdater(1000, 0, 100),
