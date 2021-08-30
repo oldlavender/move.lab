@@ -30,6 +30,7 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
      *                      // animates object1 with 3ms duration, by linearly
      *                      increasing width from 5 to 12 and changing angle 
      *                      (rotating) linearly from 30 degrees to 90 degrees
+     *          .log        bool, indicating whether to log received events
      * 
      *      BEST USAGE      Use child classes logic
      */
@@ -64,6 +65,10 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
    onShow(context) {
        this.shown = true;
        this.installUpdaterFunction();
+   }
+
+   onEnd(context) {
+       this.ended = true;
    }
 
    startUpdaters() {
@@ -111,9 +116,13 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
        }
    }
 
-   log(context, event) {
-       //console.log(this.title,": Unhandled Event ",event);
-       //console.log("context=", context);
+   logEvent(context, event, handled=false) {
+       let status = handled ? 'handled' : 'unhandled';
+       if (this.options.log == true) {
+           console.log(`[${this.title}] ${event} status=${
+            status
+           }\n\tcontext=`, context);
+       }
    }
 
     handle(context, event){
@@ -129,10 +138,10 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
                 this.onRender(context);
                 break;
             case 'end':
-                this.ended = true;
+                this.onEnd(context);
                 break;
             default:
-                this.log(context, event);
+                this.logEvent(context, event);
         }
     }
 }
