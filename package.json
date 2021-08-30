@@ -30,7 +30,9 @@
     ]
   },
   "scripts": {
-    "test": "jest --config=jest.config.cjs --verbose --watchAll"
+    "test": "jest --config=jest.config.cjs --verbose --watchAll",
+    "build:development": "webpack --mode=development",
+    "build:production": "webpack --mode=production"
   },
   "repository": {
     "type": "git",
