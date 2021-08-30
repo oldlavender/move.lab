@@ -17,7 +17,7 @@ import { ParabolicAnimationUpdater, ParabolicAnimationAltCon } from "../updaters
 
 
 
- const _move = {
+ const move = {
     lab: {
         plugins: {
             BaseAnimationPlugin: BaseAnimationPlugin,
@@ -94,7 +94,7 @@ export class MoveLab extends BaseAnimationPlugin {
                 let coordUpd = i.updaters[j];
                 if (coordUpd.type !== undefined) {
                   // instantiate a new coordUpd.type with coordUpd as options
-                  this.updaters[id][j] = _move.lab.starters[coordUpd.type](
+                  this.updaters[id][j] = move.lab.starters[coordUpd.type](
                                                 coordUpd);
                 }
             }
@@ -107,14 +107,16 @@ export class MoveLab extends BaseAnimationPlugin {
     }
 }
 
-_move.lab.plugins.MoveLab = MoveLab;
+move.lab.plugins.MoveLab = MoveLab;
+const lab = move.lab;
 
 export { 
+    move,
+    lab,
     BaseAnimationUpdater, 
     LinearAnimationUpdater, 
     ParabolicAnimationUpdater,
     LinearAnimationAltCon,
     ParabolicAnimationAltCon,
     BaseAnimationPlugin,
-    _move as move
 };
