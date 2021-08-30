@@ -42,6 +42,7 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
         this.shown = false;
         this.prepared = false;
         this.ended = false;
+        this.animationFrame = null;
     }
     
     /**
@@ -79,7 +80,11 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
    }
 
    installUpdaterFunction() {
-       window.requestAnimationFrame(upd => this.updaterFunction.call(this, upd));
+       if (this.animationFrame == null) {
+        this.animationFrame = window.requestAnimationFrame(
+            upd => this.updaterFunction.call(this, upd)
+        );
+       }
    }
 
    updateCoordinate(objid, coordinate, value) {
@@ -97,20 +102,29 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
    updaterFunction(timestamp, reinstall=true) {
        if (this.ended) return;
 
-       for (let obj in this.updaters) {
-           for (let coordinate in this.updaters[obj]) {
-               if (!(curUpdater instanceof BaseAnimationUpdater)) {
-                   continue;
-               }
-               
-               if (this.shown) {
-                    let curUpdater = this.updaters[obj][coordinate];
-                    curUpdater.Update(this.canvasScreen.timer);
-                    this.updateCoordinate(obj, coordinate, curUpdater.GetCoordinates());
-               }
-           }
-       }
-       if (this.shown && reinstall) {
+        for (let obj in this.updaters) {
+            for (let coordinate in this.updaters[obj]) {
+                let curUpdater = this.updaters[obj][coordinate];
+                if (!(curUpdater instanceof BaseAnimationUpdater)) {
+                    continue;
+                }
+                curUpdater.Update(this.canvasScreen.timer);
+                this.updateCoordinate(obj, coordinate, curUpdater.GetCoordinates());
+                if (curUpdater.ended) {
+                    delete this.updaters[obj][coordinate];
+                    if (Object.keys(this.updaters[obj]).length == 0) {
+                        delete this.updaters[obj];
+                    }
+                }
+
+            }
+        }
+        if (Object.keys(this.updaters).length == 0) {
+            this.ended = true; //we're done here
+            window.cancelAnimationFrame(this.animationFrame);
+        }
+        if (this.shown && reinstall && !this.ended) {
+            this.animationFrame = null;
             this.canvasScreen.queueAnimationFrame();
             this.installUpdaterFunction();
        }
