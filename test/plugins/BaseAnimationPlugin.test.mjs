@@ -119,7 +119,6 @@ describe(
                 "internal variables and update to initial values"
             ),
             ()=>{
-                console.log("");
                 var bap = screens[0].options.plugins[0];
                 screens[0].prepare(); //tells mock to send event to the plugins
                 var ctts = bap.canvasScreen.options.content[0];
@@ -154,6 +153,7 @@ describe(
                 // ^ 62 times by BaseAnimationPlugin, 62 times by Screen, and
                 // 1 initial calling when installed at BaseAnimationPlugin
                 expect(ctts.left).toBe(100);
+
             }
         );
     }
