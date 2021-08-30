@@ -73,7 +73,7 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
            for (let coordinate in this.updaters[obj]) {
                let updater = this.updaters[obj][coordinate];
                if (!(updater instanceof BaseAnimationUpdater)) continue;
-               updater.Start();
+               updater.Start(this.canvasScreen.timer);
            }
        }
    }
@@ -95,19 +95,22 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
    }
 
    updaterFunction(timestamp, reinstall=true) {
+       if (this.ended) return;
+
        for (let obj in this.updaters) {
            for (let coordinate in this.updaters[obj]) {
-               let curUpdater = this.updaters[obj][coordinate];
                if (!(curUpdater instanceof BaseAnimationUpdater)) {
                    continue;
                }
-               if (this.shown && !this.ended) {
-                curUpdater.Update();
+               
+               if (this.shown) {
+                    let curUpdater = this.updaters[obj][coordinate];
+                    curUpdater.Update(this.canvasScreen.timer);
+                    this.updateCoordinate(obj, coordinate, curUpdater.GetCoordinates());
                }
-               this.updateCoordinate(obj, coordinate, curUpdater.GetCoordinates());
            }
        }
-       if (this.shown && !this.ended && reinstall) {
+       if (this.shown && reinstall) {
             this.canvasScreen.queueAnimationFrame();
             this.installUpdaterFunction();
        }
@@ -123,7 +126,6 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
    }
 
     handle(context, event){
-        
         switch(event) {
             case 'prepare':
                 this.onPrepare(context);
