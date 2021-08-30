@@ -52,9 +52,6 @@ import { BaseAnimationUpdater } from "../updaters/BaseAnimationUpdater.mjs";
    onPrepare(context) {
        this.prepared = true;
        this.canvasScreen = context;
-       this.canvas = context.options.canvas;
-       this.options.defaults = context.options || {};
-       this.options.defaultcontent = context.options.content || {};
        this.updaterFunction(this.canvasScreen.timer, false);
    }
 
