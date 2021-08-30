@@ -157,15 +157,18 @@ describe(
             }
         );
         test(
-            "Update() must end when animation time is reached",
+            "Update() must end when animation time is reached and ".concat(
+                "current time must not exceed total time"
+            ),
             ()=>{
                 for (let curCase of testcases) {
                     var curobj = Construct(curCase);
                     curobj.Start(curCase.startDef);
                     curobj.Update(curCase.checkpoints[0]);
                     curobj.Update(curCase.checkpoints[2]); //advances again
-                    curobj.Update(curCase.endpoint);
+                    curobj.Update(curCase.endpoint+500);//surplus added
                     expect(curobj.ended).toBe(true); //check if advanced again
+                    expect(curobj.currentTime).toBe(curCase.endpoint);
                 }
             }
         );
