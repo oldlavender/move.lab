@@ -1,8 +1,14 @@
 # move.lab
 lab.js plugin responsible for basic animation (we move lab! - and its visual components for you).
 
+# Requirements
+move.lab is a lab.js plugin, meaning you need lab.js. You'll need to read lab.js docs and understand lab.js before you can use move.lab, as this documentation assumes you already know how to code an experiment using lab.js. Check at their [docs](https://labjs.readthedocs.io/en/latest/) for reference, there are tons of examples too.
+
 # Status
 While I am aware that things are far away from the ideal, it is an easy implementation of visual animations for lab.js. By now, the plugin works by causing new screen refreshes through a direct call to requestAnimationFrame. It then recalculate object positions or other properties based on timestamp. I think there might be better ways of doing that, but it needs some thought.
+
+There will be code and documentation improvements in some future, but only after I finish my dissertation in the next few months. 
+
 # How to Use move.lab
 There is a functioning example in the folder [example](https://github.com/brunodOut/move.lab/tree/main/example) of this repository, also available at the package. The live version of this example is available at https://demolab.bruno.today/move.lab/dist/example.html
 ## General Concept
