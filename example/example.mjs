@@ -17,7 +17,7 @@ const s = new lab.flow.Sequence({
                     fontSize: 22,
                     text: "Hello, animated world!",
                     fill: '#000000',
-                    updaters: {
+                    updaters: { // <- HERE THE 'MAGIC' HAPPENS
                         left: {
                             id: 'horizontal-movement',
                             type: 'Linear',
