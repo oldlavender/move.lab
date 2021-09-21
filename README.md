@@ -1,5 +1,5 @@
 # move.lab
-lab.js plugin responsible for basic animation (we move lab visual components for you).
+lab.js plugin responsible for basic animation (we move lab! - and its visual components for you).
 
 # Status
 While I am aware that things are far away from the ideal, it is an easy implementation of visual animations for lab.js. By now, the plugin works by causing new screen refreshes through a direct call to requestAnimationFrame. It then recalculate object positions or other properties based on timestamp. I think there might be better ways of doing that, but it needs some thought.
@@ -100,4 +100,9 @@ PS: I have very limited time and skills for maintaining this project, so if you 
 ## Author/Maintainer (s)
 1. [Bruno Moreira-Guedes](https://github.com/brunodOut/brunodOut) < moreira.guedes@estudante.uffs.edu.br >
 ## Acknowledgements
-I would like to acknowledge the author is financially supported by the Brazilian agency CAPES, for the provision my stipend during my master's program.
+The author thanks to:
+* The Brazilian agency CAPES, for the financial support provided through my stipends during my master's program. I would not be able to dedicate proper time to the development of my experiment, so move.lab would not be possible without it.
+* @FelixHenninger and others for making lab.js. Being move.lab a lab.js plugin, it would neither exist nor have a reason to without lab.js.
+* My university, the Federal University of Fronteira Sul (UFFS), public, popular and with quality, a public university aiming to provide quality education for the social minorities historically underepresented in Brazilian higher education.
+* My advisor, professor Morgana Cambrussi, specially for her patience.
+* My classmates, friends and family, who repeatedly tested the experimental tasks I produce with move.lab for me. A lot of things got fixed because of them.
